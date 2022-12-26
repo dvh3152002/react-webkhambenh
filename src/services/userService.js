@@ -5,4 +5,8 @@ const handleLoginApi = (email, password) => {//(userEmail,userPassword)
     // return axios.post('/api/login', { email:userEmail, password:userpassword })//Viet day du
 }
 
-export { handleLoginApi }
+const getAllUsers = (inputId) => {
+    return axios.get(`/api/get-all-users?id=${inputId}`);
+}
+
+export { handleLoginApi, getAllUsers }
