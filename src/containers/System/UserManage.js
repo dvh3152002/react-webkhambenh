@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss';
-import { getAllUsers } from '../../services/userService';
+import { getAllUserService, createNewUserService } from '../../services/userService';
 import ModalUser from './ModalUser';
 
 class UserManage extends Component {
@@ -16,7 +16,11 @@ class UserManage extends Component {
     }
 
     async componentDidMount() {
-        let response = await getAllUsers("ALL");
+        await this.getAllUser();
+    }
+
+    getAllUser = async () => {
+        let response = await getAllUserService("ALL");
         if (response && response.errCode === 0) {
             this.setState({
                 arrUsers: response.users
@@ -43,6 +47,23 @@ class UserManage extends Component {
         })
     }
 
+    createNewUser = async (data) => {
+        try {
+            let response = await createNewUserService(data);
+            if (response && response.errCode !== 0) {
+                alert(response.errMessage)
+            } else {
+                await this.getAllUser();
+                this.setState({
+                    isOpenModal: false
+                })
+            }
+            console.log(response);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     render() {
         let { arrUsers } = this.state;
         return (
@@ -50,6 +71,7 @@ class UserManage extends Component {
                 <ModalUser
                     isOpen={this.state.isOpenModal}
                     toggle={this.toggleUserModal}
+                    createNewUser={this.createNewUser}
                 />
                 <div className='title text-center'>Manage users</div>
                 <div className='mx-1'>
@@ -57,18 +79,18 @@ class UserManage extends Component {
                 </div>
                 <div className='users-table'>
                     <table id="customers" className='mt-3 mx-1'>
-                        <tr>
-                            <th>Email</th>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>Address</th>
-                            <th>Actions</th>
-                        </tr>
-                        {
-                            arrUsers && arrUsers.map((item, index) => {
-                                return (
-                                    <>
-                                        <tr>
+                        <tbody>
+                            <tr>
+                                <th>Email</th>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                            {
+                                arrUsers && arrUsers.map((item, index) => {
+                                    return (
+                                        <tr key={index}>
                                             <td>{item.email}</td>
                                             <td>{item.firstName}</td>
                                             <td>{item.lastName}</td>
@@ -78,10 +100,10 @@ class UserManage extends Component {
                                                 <button className='btn-delete'><i className="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
-                                    </>
-                                )
-                            })
-                        }
+                                    )
+                                })
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>
