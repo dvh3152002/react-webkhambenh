@@ -21,4 +21,8 @@ const deleteUserService = (id) => {
     })
 }
 
-export { handleLoginApi, getAllUserService, createNewUserService, deleteUserService }
+const editUserService = (data) => {
+    return axios.put('/api/edit-user', data);
+}
+
+export { handleLoginApi, getAllUserService, createNewUserService, deleteUserService, editUserService }
