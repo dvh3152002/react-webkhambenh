@@ -61,18 +61,24 @@
 
             .language-vi {
                 cursor: pointer;
+                color: gray;
 
                 &.active {
-                    color: orange;
+                    span {
+                        color: orange;
+                    }
                 }
             }
 
             .language-en {
                 cursor: pointer;
                 margin-left: 10px;
+                color: gray;
 
                 &.active {
-                    color: blue;
+                    span {
+                        color: blue;
+                    }
                 }
             }
         }
