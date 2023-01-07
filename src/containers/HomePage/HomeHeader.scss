@@ -61,24 +61,36 @@
 
             .language-vi {
                 cursor: pointer;
-                color: gray;
+                opacity: 0.2;
 
                 &.active {
+                    opacity: 1;
+
                     span {
                         color: orange;
                     }
+                }
+
+                &:hover {
+                    opacity: 1;
                 }
             }
 
             .language-en {
                 cursor: pointer;
                 margin-left: 10px;
-                color: gray;
+                opacity: 0.2;
 
                 &.active {
+                    opacity: 0.8;
+
                     span {
                         color: blue;
                     }
+                }
+
+                &:hover {
+                    opacity: 0.8;
                 }
             }
         }
@@ -142,6 +154,7 @@
         justify-content: center;
         align-items: flex-end;
         background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 1));
+        padding-bottom: 10px;
 
         .options {
             display: flex;
