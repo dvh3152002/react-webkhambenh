@@ -4,13 +4,21 @@ import { connect } from 'react-redux';
 import { getAllcodeService } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils';
 import * as actions from '../../../store/actions';
+import "./UserRedux.scss";
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
+
 
 class UserRedux extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            genderArr: []
+            genderArr: [],
+            positionArr: [],
+            roleArr: [],
+            previewImgURL: '',
+            isOpen: false
         }
     }
 
@@ -29,6 +37,8 @@ class UserRedux extends Component {
 
         //dùng redux
         this.props.getGenderStart();
+        this.props.getPositionStart();
+        this.props.getRoleStart();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -37,11 +47,40 @@ class UserRedux extends Component {
                 genderArr: this.props.genders
             })
         }
+
+        if (prevProps.position !== this.props.position) {
+            this.setState({
+                positionArr: this.props.position
+            })
+        }
+
+        if (prevProps.roles !== this.props.roles) {
+            this.setState({
+                roleArr: this.props.roles
+            })
+        }
     }
 
+    handleOnChangeImg = (event) => {
+        let data = event.target.files;
+        let file = data[0];
+        if (file) {
+            let urlImg = URL.createObjectURL(file);
+            this.setState({
+                previewImgURL: urlImg
+            })
+        }
+    }
+
+    onClickPreviewImg = () => {
+        if (!this.state.previewImgURL) return;
+        this.setState({
+            isOpen: true
+        })
+    }
 
     render() {
-        let { genderArr } = this.state;
+        let { genderArr, positionArr, roleArr, isOpen } = this.state;
         let { language } = this.props;
         return (
             <div className='user-redux-container'>
@@ -97,28 +136,49 @@ class UserRedux extends Component {
                             <div className='col-3'>
                                 <label><FormattedMessage id="manage-user.position" /></label>
                                 <select className='form-control'>
-                                    <option>Choose</option>
-                                    <option>...</option>
+                                    {positionArr && positionArr.length > 0 &&
+                                        positionArr.map((item, index) => {
+                                            return (
+                                                <option key={index}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                            )
+                                        })
+                                    }
                                 </select>
                             </div>
 
                             <div className='col-3'>
                                 <label><FormattedMessage id="manage-user.role" /></label>
                                 <select className='form-control'>
-                                    <option>Choose</option>
-                                    <option>...</option>
+                                    {roleArr && roleArr.length > 0 && roleArr.map((item, index) => {
+                                        return (
+                                            <option key={{ index }}>{language === LANGUAGES.EN ? item.valueEn : item.valueVi}</option>
+                                        )
+                                    })}
                                 </select>
                             </div>
 
                             <div className='col-3'>
                                 <label><FormattedMessage id="manage-user.image" /></label>
-                                <input type='text' className='form-control' />
+                                <div className='preview-img-container'>
+                                    <input type='file' id='previewImg' hidden onChange={(event) => this.handleOnChangeImg(event)} />
+                                    <label htmlFor='previewImg' className='label-upload'>Tải ảnh <i className="fas fa-upload"></i></label>
+                                    <div className='preview-image' style={{ backgroundImage: `url(${this.state.previewImgURL})` }}
+                                        onClick={() => this.onClickPreviewImg()}
+                                    ></div>
+                                </div>
                             </div>
 
                             <div className='col-12 mt-2'>
                                 <button className='btn btn-primary'><FormattedMessage id="manage-user.save" /></button>
                             </div>
                         </div>
+
+                        {isOpen &&
+                            <Lightbox
+                                mainSrc={this.state.previewImgURL}
+                                onCloseRequest={() => this.setState({ isOpen: false })}
+                            />
+                        }
                     </div>
                 </div>
             </div>
@@ -130,13 +190,19 @@ class UserRedux extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
-        genders: state.admin.genders
+        genders: state.admin.genders,
+        position: state.admin.position,
+        roles: state.admin.roles
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         getGenderStart: () => dispatch(actions.fetchGenderStart()),
+
+        getPositionStart: () => dispatch(actions.fetchPositionStart()),
+
+        getRoleStart: () => dispatch(actions.fetchRoleStart()),
         // processLogout: () => dispatch(actions.processLogout()),
         // changeLanguageAppRedux: (language) => dispatch(actions.changeLanguageApp(language))
     };

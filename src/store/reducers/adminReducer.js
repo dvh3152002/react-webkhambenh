@@ -1,6 +1,7 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
+    isLoading: false,
     genders: [],
     roles: [],
     position: []
@@ -9,22 +10,45 @@ const initialState = {
 const adminReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_GENDER_START:
-            console.log('fire redux start: ', action);
+            state.isLoading = true;
             return {
                 ...state,
             }
 
         case actionTypes.FETCH_GENDER_SUCCESS:
-            let copy = { ...state };
-            copy.genders = action.data;
-            console.log('fire redux success: ', copy);
-
+            state.genders = action.data;
+            state.isLoading = false;
             return {
-                ...copy,
+                ...state,
             }
 
         case actionTypes.FETCH_GENDER_FAIL:
-            console.log('fire redux fail: ', action);
+            state.isLoading = false;
+            state.genders = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_POSITION_SUCCESS:
+            state.position = action.data;
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_POSITION_FAIL:
+            state.position = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_ROLE_SUCCESS:
+            state.roles = action.data;
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_ROLE_FAIL:
+            state.roles = [];
             return {
                 ...state,
             }

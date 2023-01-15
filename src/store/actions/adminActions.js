@@ -4,9 +4,9 @@ import { getAllcodeService } from '../../services/userService';
 export const fetchGenderStart = () => {
     return async (dispatch, getState) => {
         try {
+            dispatch({ type: actionTypes.FETCH_GENDER_START })
             let res = await getAllcodeService("GENDER");
             if (res && res.errCode === 0) {
-                console.log("get state", getState)
                 dispatch(fetchGenderSuccess(res.data));
             } else {
                 dispatch(fetchGenderFail());
@@ -25,4 +25,54 @@ export const fetchGenderSuccess = (genders) => ({
 
 export const fetchGenderFail = () => ({
     type: actionTypes.FETCH_GENDER_FAIL
+})
+
+export const fetchPositionStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllcodeService("POSITION");
+            if (res && res.errCode === 0) {
+                dispatch(fetchPositionSuccess(res.data));
+            } else {
+                dispatch(fetchPositionFail());
+            }
+        } catch (error) {
+            console.log("fetch gender err", error);
+            dispatch(fetchPositionFail());
+        }
+    }
+}
+
+export const fetchPositionSuccess = (position) => ({
+    type: actionTypes.FETCH_POSITION_SUCCESS,
+    data: position
+})
+
+export const fetchPositionFail = () => ({
+    type: actionTypes.FETCH_POSITION_FAIL
+})
+
+export const fetchRoleStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllcodeService("ROLE");
+            if (res && res.errCode === 0) {
+                dispatch(fetchRoleSuccess(res.data));
+            } else {
+                dispatch(fetchRoleFail());
+            }
+        } catch (error) {
+            console.log("fetch gender err", error);
+            dispatch(fetchRoleFail());
+        }
+    }
+}
+
+export const fetchRoleSuccess = (roles) => ({
+    type: actionTypes.FETCH_ROLE_SUCCESS,
+    data: roles
+})
+
+export const fetchRoleFail = () => ({
+    type: actionTypes.FETCH_ROLE_FAIL
 })
