@@ -1,5 +1,6 @@
 import actionTypes from './actionTypes';
-import { getAllcodeService, createNewUserService } from '../../services/userService';
+import { getAllcodeService, createNewUserService, getAllUserService, deleteUserService } from '../../services/userService';
+import { toast } from 'react-toastify';
 
 export const fetchGenderStart = () => {
     return async (dispatch, getState) => {
@@ -83,21 +84,78 @@ export const createNewUser = (data) => {
         console.log("check data user: ", data)
         try {
             if (res && res.errCode === 0) {
+                toast.success("Create new user success");
                 dispatch(saveUserSuccess());
+                dispatch(fetchAllUsersStart());
             } else {
+                toast.error("Create user fail");
                 dispatch(saveUserFail())
             }
         } catch (error) {
+            toast.error("Create user fail");
             dispatch(saveUserFail())
             console.log("saveUserFail fail: ", error);
         }
     }
 }
 
-export const saveUserSuccess = ({
+export const saveUserSuccess = () => ({
     type: "CREATE_USER_SUCCESS"
 })
 
-export const saveUserFail = ({
+export const saveUserFail = () => ({
     type: "CREATE_USER_FAIL"
+})
+
+export const fetchAllUsersStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllUserService("ALL");
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllUsersSuccess(res.users.reverse()));
+            } else {
+                dispatch(fetchAllUsersFail());
+            }
+        } catch (error) {
+            console.log("fetch gender err", error);
+            dispatch(fetchAllUsersFail());
+        }
+    }
+}
+
+export const fetchAllUsersSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_USERS_SUCCESS,
+    users: data
+})
+
+export const fetchAllUsersFail = ({
+    type: actionTypes.FETCH_ALL_USERS_FAIL
+})
+
+export const deleteUserStart = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await deleteUserService(id);
+            if (res && res.errCode === 0) {
+                toast.success("Delete user success");
+                dispatch(deleteUserSuccess(res.users.reverse()));
+                dispatch(fetchAllUsersStart());
+            } else {
+                toast.error("Delete user fail");
+                dispatch(deleteUserFail());
+            }
+        } catch (error) {
+            toast.error("Delete user fail");
+            console.log("fetch gender err", error);
+            dispatch(deleteUserFail());
+        }
+    }
+}
+
+export const deleteUserSuccess = ({
+    type: actionTypes.DELETE_USER_SUCCESS
+})
+
+export const deleteUserFail = ({
+    type: actionTypes.DELETE_USER_FAIL
 })

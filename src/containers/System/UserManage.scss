@@ -8,6 +8,33 @@
 #customers th {
     border: 1px solid #ddd;
     padding: 8px;
+
+
+    .btn-edit {
+        color: orange;
+        width: 50px;
+        background-color: transparent;
+        outline: none;
+        border: none;
+
+        &:hover {
+            background-color: transparent !important;
+            color: orange !important;
+        }
+    }
+
+    .btn-delete {
+        color: red;
+        width: 50px;
+        background-color: transparent;
+        outline: none;
+        border: none;
+
+        &:hover {
+            background-color: transparent !important;
+            color: red !important;
+        }
+    }
 }
 
 #customers tr:nth-child(even) {
@@ -24,32 +51,6 @@
     text-align: left;
     background-color: #04AA6D;
     color: white;
-}
-
-.btn-edit {
-    color: orange;
-    width: 50px;
-    background-color: transparent;
-    outline: none;
-    border: none;
-
-    &:hover {
-        background-color: transparent !important;
-        color: orange !important;
-    }
-}
-
-.btn-delete {
-    color: red;
-    width: 50px;
-    background-color: transparent;
-    outline: none;
-    border: none;
-
-    &:hover {
-        background-color: transparent !important;
-        color: red !important;
-    }
 }
 
 .modal-user-container {

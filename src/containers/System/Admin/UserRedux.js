@@ -7,7 +7,7 @@ import * as actions from '../../../store/actions';
 import "./UserRedux.scss";
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
-
+import TableManageUser from './TableManageUser';
 
 class UserRedux extends Component {
 
@@ -74,6 +74,21 @@ class UserRedux extends Component {
             this.setState({
                 roleArr: roleArr,
                 role: roleArr && roleArr.length > 0 ? roleArr[0].key : ''
+            })
+        }
+
+        if (prevProps.users !== this.props.users) {
+            this.setState({
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                address: '',
+                gender: '',
+                position: '',
+                role: '',
+                avatar: '',
             })
         }
     }
@@ -230,7 +245,7 @@ class UserRedux extends Component {
                                 >
                                     {roleArr && roleArr.length > 0 && roleArr.map((item, index) => {
                                         return (
-                                            <option value={item.key} key={{ index }}>{language === LANGUAGES.EN ? item.valueEn : item.valueVi}</option>
+                                            <option value={item.key} key={index}>{language === LANGUAGES.EN ? item.valueEn : item.valueVi}</option>
                                         )
                                     })}
                                 </select>
@@ -247,10 +262,14 @@ class UserRedux extends Component {
                                 </div>
                             </div>
 
-                            <div className='col-12 mt-2'>
+                            <div className='col-12 my-2'>
                                 <button className='btn btn-primary'
                                     onClick={() => this.handleSaveUser()}
                                 ><FormattedMessage id="manage-user.save" /></button>
+                            </div>
+
+                            <div className='col-12 mb-5'>
+                                <TableManageUser />
                             </div>
                         </div>
 
@@ -273,7 +292,8 @@ const mapStateToProps = state => {
         language: state.app.language,
         genders: state.admin.genders,
         position: state.admin.position,
-        roles: state.admin.roles
+        roles: state.admin.roles,
+        users: state.admin.users
     };
 };
 
