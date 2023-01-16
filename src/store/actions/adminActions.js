@@ -138,7 +138,7 @@ export const deleteUserStart = (id) => {
             let res = await deleteUserService(id);
             if (res && res.errCode === 0) {
                 toast.success("Delete user success");
-                dispatch(deleteUserSuccess(res.users.reverse()));
+                dispatch(deleteUserSuccess());
                 dispatch(fetchAllUsersStart());
             } else {
                 toast.error("Delete user fail");
@@ -146,16 +146,16 @@ export const deleteUserStart = (id) => {
             }
         } catch (error) {
             toast.error("Delete user fail");
-            console.log("fetch gender err", error);
             dispatch(deleteUserFail());
+            console.log("fetch gender err", error);
         }
     }
 }
 
-export const deleteUserSuccess = ({
+export const deleteUserSuccess = () => ({
     type: actionTypes.DELETE_USER_SUCCESS
 })
 
-export const deleteUserFail = ({
+export const deleteUserFail = () => ({
     type: actionTypes.DELETE_USER_FAIL
 })
