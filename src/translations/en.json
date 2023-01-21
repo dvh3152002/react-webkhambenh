@@ -12,7 +12,7 @@
         "welcome": "Welcome"
     },
     "banner": {
-        "title1": "MEDICAL BACKGROUND",
+        "title1": "MEDICAL PLATFORM",
         "title2": "COMPREHENSIVE HEALTH CARE",
         "specialize-examination": "Specialized Examination",
         "remote-examination": "Remote Examination",
@@ -54,5 +54,9 @@
         "save": "Save",
         "upload-image": "Upload",
         "edit": "Save changes"
+    },
+    "home-page": {
+        "out-standing-doctor": "Last week's featured doctor",
+        "search": "Search"
     }
 }

@@ -32,8 +32,8 @@ class OutStandingDoctor extends Component {
             <div className='share-section outstanding-doctor-section'>
                 <div className='section-container'>
                     <div className='section-header'>
-                        <span className='title-section'>Bác sĩ nổi bật tuần qua</span>
-                        <button className='btn-section'>Tìm kiếm</button>
+                        <span className='title-section'><FormattedMessage id='home-page.out-standing-doctor' /></span>
+                        <button className='btn-section'><FormattedMessage id='home-page.search' /></button>
                     </div>
                     <div className='section-body'>
                         <Slider {...this.props.settings}>
