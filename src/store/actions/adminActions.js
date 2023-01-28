@@ -1,5 +1,8 @@
 import actionTypes from './actionTypes';
-import { getAllcodeService, createNewUserService, getAllUserService, deleteUserService, editUserService, getTopDoctorHome } from '../../services/userService';
+import {
+    saveInforDoctor, getAllDoctors, getAllcodeService, createNewUserService, getAllUserService,
+    deleteUserService, editUserService, getTopDoctorHome
+} from '../../services/userService';
 import { toast } from 'react-toastify';
 
 export const fetchGenderStart = () => {
@@ -211,3 +214,51 @@ export const fetchTopDoctor = () => {
     }
 }
 
+export const fetchAllDoctors = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllDoctors();
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
+                    data: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.FETCH_ALL_DOCTORS_FAIL
+                })
+            }
+        } catch (error) {
+            console.log("FETCH_ALL_DOCTORS_FAIL error: ", error);
+            dispatch({
+                type: actionTypes.FETCH_ALL_DOCTORS_FAIL
+            })
+        }
+    }
+}
+
+export const saveDoctor = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await saveInforDoctor(data);
+            if (res && res.errCode === 0) {
+                toast.success("Save infor doctor success")
+                dispatch({
+                    type: actionTypes.FETCH_SAVE_DOCTOR_SUCCESS,
+                })
+            } else {
+                toast.error("Save infor doctor fail");
+                console.log(res)
+                dispatch({
+                    type: actionTypes.FETCH_SAVE_DOCTOR_FAIL
+                })
+            }
+        } catch (error) {
+            toast.error("Save infor doctor fail");
+            console.log("FETCH_SAVE_DOCTOR_FAIL error: ", error);
+            dispatch({
+                type: actionTypes.FETCH_SAVE_DOCTOR_FAIL
+            })
+        }
+    }
+}
