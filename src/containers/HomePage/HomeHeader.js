@@ -50,56 +50,58 @@ class HomeHeader extends Component {
                         </div>
                     </div>
                 </div>
-                <div className='home-header-banner'>
-                    <div className='content-up'>
-                        <div className='title1'> <FormattedMessage id="banner.title1" /></div>
-                        <div className='title2'><FormattedMessage id="banner.title2" /></div>
-                        <div className='search'>
-                            <i className='fas fa-search'></i>
-                            <input type='text' placeholder='Tìm chuyên khoa khám bệnh' />
-                        </div>
-                    </div>
-                    <div className='content-down'>
-                        <div className='options'>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className='fas fa-hospital'></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.specialize-examination" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className='fas fa-mobile-alt'></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.remote-examination" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className="fas fa-ambulance"></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.general-examination" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className="fas fa-flask"></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.medical-test" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className='fas fa-user-md'></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.mental-health" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className="fas fa-user"></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.dental-examination" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className="fas fa-shipping-fast"></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.surgery-pack" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className='fas fa-ambulance'></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.medical-product" /></div>
-                            </div>
-                            <div className='option-child'>
-                                <div className='icon-child'><i className="fas fa-briefcase-medical"></i></div>
-                                <div className='text-child'><FormattedMessage id="banner.corporate-health" /></div>
+                {this.props.isShowBanner === true &&
+                    <div className='home-header-banner'>
+                        <div className='content-up'>
+                            <div className='title1'> <FormattedMessage id="banner.title1" /></div>
+                            <div className='title2'><FormattedMessage id="banner.title2" /></div>
+                            <div className='search'>
+                                <i className='fas fa-search'></i>
+                                <input type='text' placeholder='Tìm chuyên khoa khám bệnh' />
                             </div>
                         </div>
+                        <div className='content-down'>
+                            <div className='options'>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className='fas fa-hospital'></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.specialize-examination" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className='fas fa-mobile-alt'></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.remote-examination" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className="fas fa-ambulance"></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.general-examination" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className="fas fa-flask"></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.medical-test" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className='fas fa-user-md'></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.mental-health" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className="fas fa-user"></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.dental-examination" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className="fas fa-shipping-fast"></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.surgery-pack" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className='fas fa-ambulance'></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.medical-product" /></div>
+                                </div>
+                                <div className='option-child'>
+                                    <div className='icon-child'><i className="fas fa-briefcase-medical"></i></div>
+                                    <div className='text-child'><FormattedMessage id="banner.corporate-health" /></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                }
             </React.Fragment >
         );
     }
