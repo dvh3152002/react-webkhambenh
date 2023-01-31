@@ -23,6 +23,21 @@
         }
     }
 
+    .create-content-markdown {
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        outline: none;
+        background: rgb(96, 96, 201);
+        color: white;
+        margin-bottom: 30px;
+        margin-top: 20px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
     .more-infor {
         display: flex;
         gap: 15px;
