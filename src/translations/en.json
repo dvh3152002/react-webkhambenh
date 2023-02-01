@@ -37,6 +37,9 @@
             "manage-specialty": "Manage Specialty",
             "hanbook": "Hanbook",
             "manage-hanbook": "Manage Hanbook"
+        },
+        "doctor": {
+            "manage-schedule": "Manage doctor's schedule"
         }
     },
     "manage-user": {
