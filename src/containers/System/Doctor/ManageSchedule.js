@@ -111,7 +111,7 @@ class ManageSchedule extends Component {
             return;
         }
 
-        let formattedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+        let formattedDate = new Date(currentDate).getTime();
 
         if (rangeTime && rangeTime.length > 0) {
             let selectedTime = rangeTime.filter(item => item.isSelected === true);
@@ -121,7 +121,7 @@ class ManageSchedule extends Component {
                     let object = {};
                     object.date = formattedDate;
                     object.doctorId = selectedDoctor.value;
-                    object.time = item.keyMap;
+                    object.timeType = item.keyMap;
                     result.push(object);
                 })
 
@@ -130,6 +130,11 @@ class ManageSchedule extends Component {
                 return
             }
         }
+        this.props.saveScheduleDoctor({
+            arrSchedule: result,
+            doctorId: selectedDoctor.value,
+            date: formattedDate
+        });
     }
 
     render() {
@@ -196,7 +201,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchAllDoctors: () => dispatch(actions.fetchAllDoctors()),
-        fetchAllCodeScheduleTime: () => dispatch(actions.fetchAllCodeScheduleTime())
+        fetchAllCodeScheduleTime: () => dispatch(actions.fetchAllCodeScheduleTime()),
+        saveScheduleDoctor: (data) => dispatch(actions.saveScheduleDoctor(data)),
     };
 };
 

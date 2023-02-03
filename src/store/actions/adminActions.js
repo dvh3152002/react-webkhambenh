@@ -1,7 +1,7 @@
 import actionTypes from './actionTypes';
 import {
     saveInforDoctor, getAllDoctors, getAllcodeService, createNewUserService, getAllUserService,
-    deleteUserService, editUserService, getTopDoctorHome
+    deleteUserService, editUserService, getTopDoctorHome, saveBulkCreateScheduleDoctor
 } from '../../services/userService';
 import { toast } from 'react-toastify';
 
@@ -248,7 +248,6 @@ export const saveDoctor = (data) => {
                 })
             } else {
                 toast.error("Save infor doctor fail");
-                console.log(res)
                 dispatch({
                     type: actionTypes.FETCH_SAVE_DOCTOR_FAIL
                 })
@@ -281,6 +280,31 @@ export const fetchAllCodeScheduleTime = () => {
             console.log("FETCH_ALLCODE_SCHEDULE_TIME_FAIL error: ", error);
             dispatch({
                 type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAIL
+            })
+        }
+    }
+}
+
+export const saveScheduleDoctor = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await saveBulkCreateScheduleDoctor(data);
+            if (res && res.errCode === 0) {
+                toast.success("Save infor doctor success")
+                dispatch({
+                    type: actionTypes.FETCH_BULK_CREATE_SCHEDULE_DOCTOR_SUCCESS,
+                })
+            } else {
+                toast.error("saveBulkCreateScheduleDoctor fail");
+                dispatch({
+                    type: actionTypes.FETCH_BULK_CREATE_SCHEDULE_DOCTOR_FAIL
+                })
+            }
+        } catch (error) {
+            toast.error("saveBulkCreateScheduleDoctor fail");
+            console.log("FETCH_BULK_CREATE_SCHEDULE_DOCTOR_FAIL error: ", error);
+            dispatch({
+                type: actionTypes.FETCH_BULK_CREATE_SCHEDULE_DOCTOR_FAIL
             })
         }
     }
