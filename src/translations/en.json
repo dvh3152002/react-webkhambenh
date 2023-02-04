@@ -66,6 +66,7 @@
         "title": "Manage doctor's examination plan",
         "choose-doctor": "Choose doctor",
         "choose-date": "Choose date",
-        "save": "Save"
+        "save": "Save",
+        "examination-schedule": "Examination schedule"
     }
 }
