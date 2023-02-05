@@ -10,13 +10,17 @@ class DetailDoctor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataDetailDoctor: {}
+            dataDetailDoctor: {},
+            doctorId: -1
         }
     }
 
     async componentDidMount() {
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
             let id = this.props.match.params.id;
+            this.setState({
+                doctorId: id
+            })
             let res = await getDetailInforDoctor(id);
             if (res && res.errCode === 0) {
                 this.setState({
@@ -34,7 +38,7 @@ class DetailDoctor extends Component {
         let nameEn = '';
         let nameVi = '';
         let { language } = this.props;
-        let { dataDetailDoctor } = this.state;
+        let { dataDetailDoctor, doctorId } = this.state;
         if (dataDetailDoctor && dataDetailDoctor.positionData) {
             nameEn = `${dataDetailDoctor.positionData.valueEn}, ${dataDetailDoctor.firstName} ${dataDetailDoctor.lastName}`
             nameVi = `${dataDetailDoctor.positionData.valueVi}, ${dataDetailDoctor.lastName} ${dataDetailDoctor.firstName}`
@@ -64,7 +68,7 @@ class DetailDoctor extends Component {
                     <div className='schedule-doctor'>
                         <div className='content-left'>
                             <DoctorSchedule
-                                doctorId={dataDetailDoctor && dataDetailDoctor.id ? dataDetailDoctor.id : -1}
+                                doctorId={doctorId}
                             />
                         </div>
                         <div className='content-right'></div>

@@ -66,7 +66,12 @@
         "title": "Quản lý kế hoạch khám bệnh của bác sĩ",
         "choose-doctor": "Chọn bác sĩ",
         "choose-date": "Chọn ngày",
-        "save": "Lưu thông tin",
-        "examination-schedule": "Lịch khám"
+        "save": "Lưu thông tin"
+    },
+    "patient": {
+        "schedule": "Lịch khám",
+        "no-schedule": "Không có lịch trong thời gian này. Hãy chọn thời gian khác",
+        "choose": "Chọn ",
+        "book-free": " và đặt (miễn phí)"
     }
 }

@@ -66,7 +66,12 @@
         "title": "Manage doctor's examination plan",
         "choose-doctor": "Choose doctor",
         "choose-date": "Choose date",
-        "save": "Save",
-        "examination-schedule": "Examination schedule"
+        "save": "Save"
+    },
+    "patient": {
+        "schedule": "schedule",
+        "no-schedule": "There is no schedule during this time. Please select another time",
+        "choose": " Choose ",
+        "book-free": " and book (free)"
     }
 }
