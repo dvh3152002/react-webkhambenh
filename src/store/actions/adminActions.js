@@ -309,3 +309,38 @@ export const saveScheduleDoctor = (data) => {
         }
     }
 }
+
+export const fetchRequiredDoctorInfor = () => {
+    return async (dispatch, getState) => {
+        try {
+            let resPrice = await getAllcodeService("PRICE");
+            let resPayment = await getAllcodeService("PAYMENT");
+            let resProvince = await getAllcodeService("PROVINCE");
+            if (resPrice && resPrice.errCode === 0
+                && resPayment && resPayment.errCode === 0
+                && resProvince && resProvince.errCode === 0
+            ) {
+                let data = {
+                    dataPrice: resPrice.data,
+                    dataPayment: resPayment.data,
+                    dataProvince: resProvince.data,
+                }
+                dispatch(fetchRequiredDoctorInforSuccess(data));
+            } else {
+                dispatch(fetchRequiredDoctorInforFail());
+            }
+        } catch (error) {
+            console.log("fetch gender err", error);
+            dispatch(fetchRequiredDoctorInforFail());
+        }
+    }
+}
+
+export const fetchRequiredDoctorInforSuccess = (data) => ({
+    type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_SUCCESS,
+    data: data
+})
+
+export const fetchRequiredDoctorInforFail = () => ({
+    type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_FAIL
+})

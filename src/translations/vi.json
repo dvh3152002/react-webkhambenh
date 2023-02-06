@@ -73,5 +73,14 @@
         "no-schedule": "Không có lịch trong thời gian này. Hãy chọn thời gian khác",
         "choose": "Chọn ",
         "book-free": " và đặt (miễn phí)"
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "Thêm thông tin bác sĩ",
+            "select-doctor": "Chọn bác sĩ",
+            "intro": "Thông tin giới thiệu",
+            "save": "Lưu thông tin",
+            "add": "Sửa thông tin"
+        }
     }
 }

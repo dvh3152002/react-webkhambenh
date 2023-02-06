@@ -73,5 +73,14 @@
         "no-schedule": "There is no schedule during this time. Please select another time",
         "choose": " Choose ",
         "book-free": " and book (free)"
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "More doctor information",
+            "select-doctor": "Select doctor",
+            "intro": "Introductory information",
+            "save": "Save",
+            "add": "Create"
+        }
     }
 }
