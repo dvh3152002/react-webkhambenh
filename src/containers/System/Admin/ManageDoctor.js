@@ -158,13 +158,9 @@ class ManageDoctor extends Component {
             contentHTML: '',
             selectedDoctor: '',
             description: '',
-            listDoctors: [],
             hasOldData: false,
 
             //save doctor-infor
-            dataPrice: [],
-            dataPayment: [],
-            dataProvince: [],
             selectPrice: '',
             selectPayment: '',
             selectProvince: '',
@@ -181,18 +177,49 @@ class ManageDoctor extends Component {
         let res = await getDetailInforDoctor(selectedDoctor.value);
         if (res && res.errCode === 0 && res.data && res.data.Markdown) {
             let markdown = res.data.Markdown;
+            let { dataPrice, dataPayment, dataProvince } = this.state;
+            let selectPrice = '', selectPayment = '', selectProvince = '', addressClinic = '',
+                nameClinic = '', note = '';
+
+
+            if (res.data.Doctor_Infor) {
+                let doctorInfor = res.data.Doctor_Infor;
+                addressClinic = doctorInfor.addressClinic;
+                nameClinic = doctorInfor.nameClinic;
+                note = doctorInfor.note;
+
+                selectPrice = dataPrice.find(item => {
+                    return item && item.value === doctorInfor.priceId
+                })
+                selectPayment = dataPayment.find(item => {
+                    return item && item.value === doctorInfor.paymentId
+                })
+                selectProvince = dataProvince.find(item => {
+                    return item && item.value === doctorInfor.provinceId
+                })
+            }
+
             this.setState({
                 contentHTML: markdown.contentHTML,
                 contentMarkdown: markdown.contentMarkdown,
                 description: markdown.description,
-                hasOldData: true
+                hasOldData: true,
+                selectPrice: selectPrice,
+                selectPayment: selectPayment,
+                selectProvince: selectProvince,
+                addressClinic: addressClinic,
+                nameClinic: nameClinic,
+                note: note
             })
         } else {
             this.setState({
                 contentHTML: '',
                 contentMarkdown: '',
                 description: '',
-                hasOldData: false
+                hasOldData: false,
+                addressClinic: '',
+                nameClinic: '',
+                note: ''
             })
         }
     };
@@ -215,8 +242,8 @@ class ManageDoctor extends Component {
     }
 
     render() {
+        console.log(this.state)
         let { hasOldData, dataPrice, dataPayment, dataProvince, nameClinic, addressClinic, note } = this.state;
-        console.log(this.state.selectPayment)
         return (
             <div className='manage-doctor-container'>
                 <div className='manage-doctor-title'><FormattedMessage id='admin.manage-doctor.title' /></div>
