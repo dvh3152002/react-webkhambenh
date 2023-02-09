@@ -72,7 +72,14 @@
         "schedule": "Lịch khám",
         "no-schedule": "Không có lịch trong thời gian này. Hãy chọn thời gian khác",
         "choose": "Chọn ",
-        "book-free": " và đặt (miễn phí)"
+        "book-free": " và đặt (miễn phí)",
+        "extra-doctor-infor": {
+            "text-address": "ĐỊA CHỈ KHÁM",
+            "price": "Giá khám",
+            "show": "Xem chi tiết",
+            "hide": "Ẩn bảng giá",
+            "payment": "Người bệnh có thể thanh toán chi phí bằng hình thức: "
+        }
     },
     "admin": {
         "manage-doctor": {

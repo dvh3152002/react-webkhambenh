@@ -5,22 +5,39 @@ import './DoctorExtraInfor.scss';
 import { LANGUAGES } from '../../../utils';
 import * as actions from '../../../store/actions';
 import './DoctorExtraInfor.scss';
+import { getExtraDoctorInfor } from '../../../services/userService';
+import NumberFormat from 'react-number-format';
+import { FormattedMessage } from 'react-intl';
 
 class DoctorExtraInfor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isShow: true
+            isShow: false,
+            extraInfor: {}
         }
     }
 
-    componentDidMount() {
-
+    async componentDidMount() {
+        let res = await getExtraDoctorInfor(this.props.doctorId);
+        if (res && res.errCode === 0) {
+            this.setState({
+                extraInfor: res.data
+            })
+        }
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.language !== prevProps.language) {
+        }
 
+        if (this.props.doctorId !== prevProps.doctorId) {
+            let res = await getExtraDoctorInfor(this.props.doctorId);
+            if (res && res.errCode === 0) {
+                this.setState({
+                    extraInfor: res.data
+                })
+            }
         }
     }
 
@@ -31,33 +48,79 @@ class DoctorExtraInfor extends Component {
     }
 
     render() {
-        let { isShow } = this.state;
+        let { isShow, extraInfor } = this.state;
         return (
             <>
                 <div className='doctor-extra-infor-container'>
                     <div className='content-up'>
-                        <div className='text-address'>ĐỊA CHỈ KHÁM</div>
-                        <div className='name-clinic'>Phòng khám Bệnh viện Đại học Y Dược 1</div>
-                        <div className='detail-address'>20-22 Dương Quang Trung, Phường 12, Quận 10, Tp. HCM</div>
+                        <div className='text-address'><FormattedMessage id='patient.extra-doctor-infor.text-address' /></div>
+                        <div className='name-clinic'>{extraInfor && extraInfor.nameClinic ? extraInfor.nameClinic : ''}</div>
+                        <div className='detail-address'>{extraInfor && extraInfor.addressClinic ? extraInfor.addressClinic : ''}</div>
                     </div>
                     <div className='content-down'>
                         {isShow === false ?
-                            <div className='short-infor'>GIÁ KHÁM: 300.000đ.
-                                <span onClick={() => this.showHideDetailInfor()}>Xem chi tiết</span>
+                            <div className='short-infor'><FormattedMessage id='patient.extra-doctor-infor.price' />
+                                {extraInfor && extraInfor.priceData && LANGUAGES.VI === this.props.language
+                                    &&
+                                    <NumberFormat
+                                        className='currency'
+                                        value={extraInfor.priceData.valueVi}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        suffix={'VND'}
+                                    />
+                                }
+                                {extraInfor && extraInfor.priceData && LANGUAGES.EN === this.props.language
+                                    &&
+                                    <NumberFormat
+                                        className='currency'
+                                        value={extraInfor.priceData.valueEn}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        suffix={'$'}
+                                    />
+                                }
+                                <span className='show' onClick={() => this.showHideDetailInfor()}><FormattedMessage id='patient.extra-doctor-infor.show' /></span>
                             </div>
                             :
                             <>
-                                <div className='title-price'>GIÁ KHÁM: </div>
+                                <div className='title-price'><FormattedMessage id='patient.extra-doctor-infor.price' /> </div>
                                 <div className='detail-infor'>
                                     <div className='price'>
-                                        <span className='left'>Giá khám</span>
-                                        <span className='right'>300.000đ</span>
+                                        <span className='left'><FormattedMessage id='patient.extra-doctor-infor.price' /></span>
+                                        {extraInfor && extraInfor.priceData && LANGUAGES.VI === this.props.language
+                                            &&
+                                            <NumberFormat
+                                                className='right'
+                                                value={extraInfor.priceData.valueVi}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                suffix={'VND'}
+                                            />
+                                        }
+                                        {extraInfor && extraInfor.priceData && LANGUAGES.EN === this.props.language
+                                            &&
+                                            <NumberFormat
+                                                className='right'
+                                                value={extraInfor.priceData.valueEn}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                suffix={'$'}
+                                            />
+                                        }
                                     </div>
-                                    <div className='note'>Được ưu tiên khám trước khi đật khám qua BookingCare. Giá khám cho người nước ngoài là 30 USD</div>
+                                    <div className='note'>{extraInfor && extraInfor.note ? extraInfor.note : ''}</div>
                                 </div>
-                                <div className='payment'>Người bệnh có thể thanh toán chi phí bằng hình thức tiền mặt và quẹt thẻ</div>
+                                <div className='payment'><FormattedMessage id='patient.extra-doctor-infor.payment' />
+                                    {extraInfor && extraInfor.paymentData && LANGUAGES.EN === this.props.language
+                                        && extraInfor.paymentData.valueEn
+                                    }
+                                    {extraInfor && extraInfor.paymentData && LANGUAGES.VI === this.props.language
+                                        && extraInfor.paymentData.valueVi
+                                    }
+                                </div>
                                 <div className='hide'>
-                                    <span onClick={() => this.showHideDetailInfor()}>Ẩn bảng giá</span>
+                                    <span className='show' onClick={() => this.showHideDetailInfor()}>Ẩn bảng giá</span>
                                 </div>
                             </>
                         }

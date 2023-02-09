@@ -21,7 +21,11 @@
         .short-infor{
             padding: 5px 0;
 
-            span{
+            .currency{
+                padding: 5px;
+            }
+
+            .show{
                 margin-left: 10px;
                 cursor: pointer;
                 color: #45c3d2;
@@ -57,7 +61,7 @@
         .hide{
             margin-top: 10px;
 
-            span{
+            .show{
                 cursor: pointer;
                 color: #45c3d2;
             }
