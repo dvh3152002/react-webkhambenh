@@ -79,6 +79,18 @@
             "show": "Show all",
             "hide": "Hide price list",
             "payment": "The patient can pay the cost in the form of: "
+        },
+        "booking-modal": {
+            "title": "Notice of appointment of medical examination",
+            "fullName": "Full name",
+            "email": "Email",
+            "address": "Address",
+            "phoneNumber": "Phone number",
+            "gender": "Gender",
+            "birthday": "Birthday",
+            "reason": "Reason",
+            "btn-confirm": "Confirm",
+            "btn-cancel": "Cancel"
         }
     },
     "admin": {

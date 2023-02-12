@@ -242,7 +242,6 @@ class ManageDoctor extends Component {
     }
 
     render() {
-        console.log(this.state)
         let { hasOldData, dataPrice, dataPayment, dataProvince, nameClinic, addressClinic, note } = this.state;
         return (
             <div className='manage-doctor-container'>

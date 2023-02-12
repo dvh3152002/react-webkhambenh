@@ -66,7 +66,6 @@ class ProfileDoctor extends Component {
         let nameEn = '';
         let nameVi = '';
         let { language, isShowDescription, dataScheduleTimeModal } = this.props;
-        console.log(dataScheduleTimeModal)
         if (dataProfile && dataProfile.positionData) {
             nameEn = `${dataProfile.positionData.valueEn}, ${dataProfile.firstName} ${dataProfile.lastName}`
             nameVi = `${dataProfile.positionData.valueVi}, ${dataProfile.lastName} ${dataProfile.firstName}`

@@ -79,6 +79,18 @@
             "show": "Xem chi tiết",
             "hide": "Ẩn bảng giá",
             "payment": "Người bệnh có thể thanh toán chi phí bằng hình thức: "
+        },
+        "booking-modal": {
+            "title": "Thông tin đặt lịch khám bệnh",
+            "fullName": "Họ tên",
+            "email": "Email",
+            "address": "Địa chỉ liên hệ",
+            "phoneNumber": "Số điện thoại",
+            "gender": "Giới tính",
+            "birthday": "Ngày sinh",
+            "reason": "Lý do khám bệnh",
+            "btn-confirm": "Xác nhận",
+            "btn-cancel": "Thoát"
         }
     },
     "admin": {
