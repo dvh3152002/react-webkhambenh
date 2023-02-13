@@ -11,6 +11,7 @@ import { LANGUAGES } from '../../../../utils';
 import Select from 'react-select';
 import { postBookingAppointment } from '../../../../services/userService';
 import { toast } from 'react-toastify';
+import moment, { lang } from 'moment';
 
 class BookingModal extends Component {
     constructor(props) {
@@ -96,9 +97,37 @@ class BookingModal extends Component {
         this.setState({ selectedGender: selectedGender })
     }
 
+    capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    renderDataTime(dataTime) {
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let time = this.props.language === LANGUAGES.VI ? dataTime.timeTypeData.valueVi : dataTime.timeTypeData.valueEn;
+            let date = this.props.language === LANGUAGES.VI ? moment(new Date(dataTime.date)).format('dddd - DD/MM/YYYY')
+                :
+                moment(new Date(dataTime.date)).locale('en').format('dddd - MM/DD/YYYY')
+                ;
+            return `${time} - ${this.capitalizeFirstLetter(date)}`
+        }
+        return ``
+    }
+
+    renderDoctorName(dataTime) {
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let nameEn = `${dataTime.doctorData.firstName} ${dataTime.doctorData.lastName}`
+            let nameVi = `${dataTime.doctorData.lastName} ${dataTime.doctorData.firstName}`
+            let name = this.props.language === LANGUAGES.VI ? nameVi : nameEn
+            return name;
+        }
+        return ``
+    }
+
     confirmBooking = async () => {
         // !data.email || !data.doctorId || !data.timeType || !data.date
         let date = new Date(this.state.birthday).getTime();
+        let timeString = this.renderDataTime(this.props.dataScheduleTimeModal);
+        let doctorName = this.renderDoctorName(this.props.dataScheduleTimeModal);
         let res = await postBookingAppointment({
             fullName: this.state.fullName,
             phoneNumber: this.state.phoneNumber,
@@ -108,7 +137,10 @@ class BookingModal extends Component {
             date: date,
             selectedGender: this.state.selectedGender.value,
             doctorId: this.state.doctorId,
-            timeType: this.state.timeType
+            doctorName: doctorName,
+            timeType: this.state.timeType,
+            language: this.props.language,
+            timeString: timeString
         })
         if (res && res.errCode === 0) {
             toast.success("Booking a new appointment success");
