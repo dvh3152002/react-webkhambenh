@@ -4,7 +4,8 @@ export const path = {
     LOG_OUT: '/logout',
     SYSTEM: '/system',
     HOMEPAGE: '/home',
-    DETAILDOCTOR: "/detail-doctor/:id"
+    DETAILDOCTOR: "/detail-doctor/:id",
+    VERIFY_EMAIL: "/verify-booking"
 };
 
 export const LANGUAGES = {
