@@ -1,7 +1,7 @@
 import actionTypes from './actionTypes';
 import {
     saveInforDoctor, getAllDoctors, getAllcodeService, createNewUserService, getAllUserService,
-    deleteUserService, editUserService, getTopDoctorHome, saveBulkCreateScheduleDoctor
+    deleteUserService, editUserService, getTopDoctorHome, saveBulkCreateScheduleDoctor, getAllSpecialtyService
 } from '../../services/userService';
 import { toast } from 'react-toastify';
 
@@ -343,4 +343,29 @@ export const fetchRequiredDoctorInforSuccess = (data) => ({
 
 export const fetchRequiredDoctorInforFail = () => ({
     type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_FAIL
+})
+
+export const getAllSpecialty = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllSpecialtyService();
+            if (res && res.errCode === 0) {
+                dispatch(getAllSpecialtySuccess(res.data));
+            } else {
+                dispatch(getAllSpecialtyFail());
+            }
+        } catch (error) {
+            console.log("fetch gender err", error);
+            dispatch(getAllSpecialtyFail());
+        }
+    }
+}
+
+export const getAllSpecialtySuccess = (data) => ({
+    type: actionTypes.GET_ALL_SPECIALTY_SUCCESS,
+    data: data
+})
+
+export const getAllSpecialtyFail = () => ({
+    type: actionTypes.GET_ALL_SPECIALTY_FAIL
 })
