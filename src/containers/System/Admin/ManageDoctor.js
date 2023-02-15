@@ -34,12 +34,17 @@ class ManageDoctor extends Component {
             dataPrice: [],
             dataPayment: [],
             dataProvince: [],
+            dataSpecialty: [],
+            dataClinic: [],
             selectPrice: '',
             selectPayment: '',
             selectProvince: '',
+            selectSpecialty: '',
+            selectClinic: '',
             nameClinic: '',
             addressClinic: '',
-            note: ''
+            note: '',
+
         }
     }
 
@@ -82,6 +87,16 @@ class ManageDoctor extends Component {
                     result.push(object);
                 })
             }
+
+            if (type === 'specialty') {
+                data.map((item, index) => {
+                    let object = {};
+
+                    object.value = item.id;
+                    object.label = item.name;
+                    result.push(object);
+                })
+            }
         }
         return result;
     }
@@ -89,6 +104,7 @@ class ManageDoctor extends Component {
     componentDidMount() {
         this.props.fetchAllDoctors();
         this.props.fetchRequiredDoctorInfor();
+        this.props.getAllSpecialty();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -126,6 +142,13 @@ class ManageDoctor extends Component {
                 dataProvince: provinces
             })
         }
+
+        if (prevProps.dataSpecialty !== this.props.dataSpecialty) {
+            let specialty = this.buildDataSelect(this.props.dataSpecialty, 'specialty');
+            this.setState({
+                dataSpecialty: specialty
+            })
+        }
     }
 
 
@@ -149,7 +172,9 @@ class ManageDoctor extends Component {
             selectProvince: this.state.selectProvince.value,
             nameClinic: this.state.nameClinic,
             addressClinic: this.state.addressClinic,
-            note: this.state.note
+            note: this.state.note,
+            clinicId: this.state.selectClinic ? this.state.selectClinic.value : '',
+            specialtyId: this.state.selectSpecialty.value
         })
 
         this.setState({
@@ -166,7 +191,9 @@ class ManageDoctor extends Component {
             selectProvince: '',
             nameClinic: '',
             addressClinic: '',
-            note: ''
+            note: '',
+            selectClinic: '',
+            selectSpecialty: ''
         })
     }
 
@@ -320,10 +347,30 @@ class ManageDoctor extends Component {
                             value={note}
                         />
                     </div>
+                    <div className='col-4 form-group'>
+                        <label><FormattedMessage id="admin.manage-doctor.specialty" /></label>
+                        <Select
+                            value={this.state.selectSpecialty}
+                            onChange={this.handleChangeSelectDoctorInfor}
+                            name='selectSpecialty'
+                            options={this.state.dataSpecialty}
+                            placeholder={<FormattedMessage id='admin.manage-doctor.specialty' />}
+                        />
+                    </div>
+                    <div className='col-4 form-group'>
+                        <label><FormattedMessage id="admin.manage-doctor.clinic" /></label>
+                        <Select
+                            value={this.state.selectClinic}
+                            onChange={this.handleChangeSelectDoctorInfor}
+                            name='selectClinic'
+                            options={this.state.dataClinic}
+                            placeholder={<FormattedMessage id='admin.manage-doctor.clinic' />}
+                        />
+                    </div>
                 </div>
 
                 <div className='manage-doctor-editor'>
-                    <MdEditor style={{ height: '500px' }}
+                    <MdEditor style={{ height: '300px' }}
                         renderHTML={text => mdParser.render(text)}
                         onChange={this.handleEditorChange}
                         value={this.state.contentMarkdown}
@@ -344,7 +391,8 @@ const mapStateToProps = state => {
     return {
         language: state.app.language,
         allDoctor: state.admin.allDoctor,
-        dataDoctorInfor: state.admin.dataDoctorInfor
+        dataDoctorInfor: state.admin.dataDoctorInfor,
+        dataSpecialty: state.admin.dataSpecialty
     };
 };
 
@@ -352,7 +400,8 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchAllDoctors: () => dispatch(actions.fetchAllDoctors()),
         fetchRequiredDoctorInfor: () => dispatch(actions.fetchRequiredDoctorInfor()),
-        saveDoctor: (data) => dispatch(actions.saveDoctor(data))
+        saveDoctor: (data) => dispatch(actions.saveDoctor(data)),
+        getAllSpecialty: () => dispatch(actions.getAllSpecialty()),
     };
 };
 
