@@ -204,9 +204,9 @@ class ManageDoctor extends Component {
         let res = await getDetailInforDoctor(selectedDoctor.value);
         if (res && res.errCode === 0 && res.data && res.data.Markdown) {
             let markdown = res.data.Markdown;
-            let { dataPrice, dataPayment, dataProvince } = this.state;
+            let { dataPrice, dataPayment, dataProvince, dataClinic, dataSpecialty } = this.state;
             let selectPrice = '', selectPayment = '', selectProvince = '', addressClinic = '',
-                nameClinic = '', note = '';
+                nameClinic = '', note = '', selectClinic = '', selectSpecialty = '';
 
 
             if (res.data.Doctor_Infor) {
@@ -224,6 +224,12 @@ class ManageDoctor extends Component {
                 selectProvince = dataProvince.find(item => {
                     return item && item.value === doctorInfor.provinceId
                 })
+                selectSpecialty = dataSpecialty.find(item => {
+                    return item && item.value === doctorInfor.specialtyId
+                })
+                selectClinic = dataClinic.find(item => {
+                    return item && item.value === doctorInfor.clinicId
+                })
             }
 
             this.setState({
@@ -236,7 +242,9 @@ class ManageDoctor extends Component {
                 selectProvince: selectProvince,
                 addressClinic: addressClinic,
                 nameClinic: nameClinic,
-                note: note
+                note: note,
+                selectSpecialty: selectSpecialty,
+                selectClinic: selectClinic
             })
         } else {
             this.setState({
@@ -246,7 +254,9 @@ class ManageDoctor extends Component {
                 hasOldData: false,
                 addressClinic: '',
                 nameClinic: '',
-                note: ''
+                note: '',
+                selectSpecialty: '',
+                selectClinic: ''
             })
         }
     };
