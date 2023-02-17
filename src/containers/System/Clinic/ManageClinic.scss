@@ -1,0 +1,26 @@
+.manage-clinic-container{
+    padding: 0 15px;
+
+    .m-c-title{
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 18px;
+        color: rgb(50, 50, 197);
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .manage-clinic-body{
+        .btn-save{
+            outline: none;
+            border: none;
+            padding: 8px 15px;
+            background-color: orange;
+
+            &:hover{
+                opacity: 0.8;
+            }
+        }
+    }
+
+}
