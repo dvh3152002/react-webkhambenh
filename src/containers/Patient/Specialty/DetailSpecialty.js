@@ -17,7 +17,7 @@ class DetailSpecialty extends Component {
             arrDoctorId: [],
             dataDetailSpecialty: {},
             listProvince: [],
-            selectOption: ''
+            selectOption: 'ALL'
         }
     }
 
@@ -26,10 +26,51 @@ class DetailSpecialty extends Component {
             let id = this.props.match.params.id;
             let res = await getDetailSpecialtyByIdService({
                 id: id,
-                location: 'ALL'
+                location: this.state.selectOption
             });
             let resProvince = await getAllcodeService('PROVINCE');
             if (res && res.errCode === 0 && resProvince && resProvince.errCode === 0) {
+                let data = res.data;
+                let arrDoctorId = [];
+                let dataProvince = resProvince.data;
+                if (dataProvince && dataProvince.length > 0) {
+                    dataProvince.unshift({
+                        keyMap: "ALL",
+                        valueVi: "Toàn quốc",
+                        valueEn: 'Nationwide'
+                    })
+                }
+
+                if (data && !_.isEmpty(data)) {
+                    let arr = data.doctorSpecialty;
+                    if (arr && arr.length > 0) {
+                        arr.map(item => {
+                            arrDoctorId.push(item.doctorId);
+                        })
+                    }
+                }
+                this.setState({
+                    dataDetailSpecialty: data,
+                    arrDoctorId: arrDoctorId,
+                    listProvince: dataProvince ? dataProvince : []
+                })
+            }
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+    }
+
+    handleOnChange = async (event) => {
+        if (this.props.match && this.props.match.params && this.props.match.params.id) {
+            let id = this.props.match.params.id;
+            let location = event.target.value;
+            let res = await getDetailSpecialtyByIdService({
+                id: id,
+                location: location
+            });
+            if (res && res.errCode === 0) {
                 let data = res.data;
                 let arrDoctorId = [];
 
@@ -43,23 +84,14 @@ class DetailSpecialty extends Component {
                 }
                 this.setState({
                     dataDetailSpecialty: data,
-                    arrDoctorId: arrDoctorId,
-                    listProvince: resProvince.data
+                    arrDoctorId: arrDoctorId
                 })
             }
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-
-    }
-
-    handleOnChange = (event) => {
-        console.log(event.target.value)
-    }
-
     render() {
-        let { arrDoctorId, dataDetailSpecialty, listProvince, selectOption } = this.state;
+        let { arrDoctorId, dataDetailSpecialty, listProvince } = this.state;
         let { language } = this.props;
         return (
             <div className='detail-specialty-container'>
@@ -79,22 +111,21 @@ class DetailSpecialty extends Component {
                     }
                 </div>
 
-                <div className='select-location'>
-                    <select value={selectOption} onChange={(event) => this.handleOnChange(event)}>
-                        <option value='ALL' selected>{language === LANGUAGES.VI ? 'Toàn quốc' : 'Nationwide'}</option>
-                        {listProvince && listProvince.length > 0 &&
-                            listProvince.map((item, index) => {
-                                return (
-                                    <option key={index} value={item.keyMap}>
-                                        {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
-                                    </option>
-                                )
-                            })
-                        }
-                    </select>
-                </div>
-
                 <div className='detail-specialty-body'>
+                    <div className='select-location'>
+                        <select onChange={(event) => this.handleOnChange(event)}>
+                            {listProvince && listProvince.length > 0 &&
+                                listProvince.map((item, index) => {
+                                    return (
+                                        <option key={index} value={item.keyMap}>
+                                            {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                        </option>
+                                    )
+                                })
+                            }
+                        </select>
+                    </div>
+
                     {arrDoctorId && arrDoctorId.length > 0 &&
                         arrDoctorId.map((item, index) => {
                             return (
@@ -105,6 +136,8 @@ class DetailSpecialty extends Component {
                                         <ProfileDoctor
                                             doctorId={item}
                                             isShowDescription={true}
+                                            isShowPrice={false}
+                                            isShowMoreInfor={true}
                                         />
                                     </div>
                                     <div className='dt-content-right'>

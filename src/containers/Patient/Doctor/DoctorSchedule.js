@@ -21,12 +21,18 @@ class DoctorSchedule extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         let { language } = this.props;
         let allDays = this.getAllDays(language);
         this.setState({
             allDays: allDays
         })
+        if (this.props.doctorId) {
+            let res = await getDateScheduleDoctor(this.props.doctorId, allDays[0].value);
+            this.setState({
+                allAvailableTime: res.data ? res.data : []
+            })
+        }
     }
 
     capitalizeFirstLetter = (string) => {

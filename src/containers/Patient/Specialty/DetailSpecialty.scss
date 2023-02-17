@@ -14,12 +14,19 @@
         }
     }
 
-    .select-location{
-        margin: 0 100px;
-    }
-
     .detail-specialty-body{
-        margin: 0 100px;
+        padding: 15px 100px;
+        background-color: #ccc;
+
+        .select-location{
+            select{
+                border: none;
+                outline: none;
+                height: 30px;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+        }
 
         .each-doctor{
             display: flex;
@@ -28,7 +35,7 @@
             background-color: #fff;
             box-shadow: 0 1px 6px #20212447;
             border-radius: 8px;
-            margin: 15px 0;
+            margin-top: 15px;
     
             .dt-content-left{
                 width: 50%;
