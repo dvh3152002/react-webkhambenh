@@ -52,6 +52,13 @@
 
     .section-body {
         .section-customize {
+            cursor: pointer;
+
+            &:hover{
+                color: rgb(46, 120, 205);
+                transition: all 0.3s;
+            }
+
             .bg-image {
                 width: 278px;
                 height: 157px;
@@ -66,7 +73,7 @@
                 }
 
                 &.medical-facility-section {
-                    background-image: url("../../assets/medical-facility/bv-viet-duc.jpg");
+                    // background-image: url("../../assets/medical-facility/bv-viet-duc.jpg");
                 }
 
                 &.outstanding-doctor-section {

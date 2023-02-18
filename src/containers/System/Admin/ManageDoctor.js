@@ -9,7 +9,7 @@ import { CRUD_ACTION, LANGUAGES } from '../../../utils';
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
 import Select from 'react-select';
-import { getDetailInforDoctor } from '../../../services/userService';
+import { getDetailInforDoctor, getAllClinic } from '../../../services/userService';
 
 // Register plugins if required
 // MdEditor.use(YOUR_PLUGINS_HERE);
@@ -88,7 +88,7 @@ class ManageDoctor extends Component {
                 })
             }
 
-            if (type === 'specialty') {
+            if (type === 'specialty' || type === 'clinic') {
                 data.map((item, index) => {
                     let object = {};
 
@@ -101,10 +101,17 @@ class ManageDoctor extends Component {
         return result;
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.props.fetchAllDoctors();
         this.props.fetchRequiredDoctorInfor();
         this.props.getAllSpecialty();
+        let res = await getAllClinic();
+        if (res && res.errCode === 0) {
+            let dataClinic = this.buildDataSelect(res.data, 'clinic');
+            this.setState({
+                dataClinic: dataClinic
+            })
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -161,7 +168,7 @@ class ManageDoctor extends Component {
     }
 
     handleSaveContentMarkdown = () => {
-        this.props.saveDoctor({
+        let res = this.props.saveDoctor({
             contentHTML: this.state.contentHTML,
             contentMarkdown: this.state.contentMarkdown,
             description: this.state.description,
@@ -173,28 +180,30 @@ class ManageDoctor extends Component {
             nameClinic: this.state.nameClinic,
             addressClinic: this.state.addressClinic,
             note: this.state.note,
-            clinicId: this.state.selectClinic ? this.state.selectClinic.value : '',
+            clinicId: this.state.selectClinic,
             specialtyId: this.state.selectSpecialty.value
         })
 
-        this.setState({
-            //save markdown
-            contentMarkdown: '',
-            contentHTML: '',
-            selectedDoctor: '',
-            description: '',
-            hasOldData: false,
+        if (res.errCode === 0) {
+            this.setState({
+                //save markdown
+                contentMarkdown: '',
+                contentHTML: '',
+                selectedDoctor: '',
+                description: '',
+                hasOldData: false,
 
-            //save doctor-infor
-            selectPrice: '',
-            selectPayment: '',
-            selectProvince: '',
-            nameClinic: '',
-            addressClinic: '',
-            note: '',
-            selectClinic: '',
-            selectSpecialty: ''
-        })
+                //save doctor-infor
+                selectPrice: '',
+                selectPayment: '',
+                selectProvince: '',
+                nameClinic: '',
+                addressClinic: '',
+                note: '',
+                selectClinic: '',
+                selectSpecialty: ''
+            })
+        }
     }
 
     handleChangeSelect = async (selectedDoctor) => {
@@ -206,7 +215,7 @@ class ManageDoctor extends Component {
             let markdown = res.data.Markdown;
             let { dataPrice, dataPayment, dataProvince, dataClinic, dataSpecialty } = this.state;
             let selectPrice = '', selectPayment = '', selectProvince = '', addressClinic = '',
-                nameClinic = '', note = '', selectClinic = '', selectSpecialty = '';
+                nameClinic = '', note = '', selectClinic = '', selectSpecialty = '', clinicId = '';
 
 
             if (res.data.Doctor_Infor) {
@@ -214,6 +223,7 @@ class ManageDoctor extends Component {
                 addressClinic = doctorInfor.addressClinic;
                 nameClinic = doctorInfor.nameClinic;
                 note = doctorInfor.note;
+                clinicId = doctorInfor.clinicId
 
                 selectPrice = dataPrice.find(item => {
                     return item && item.value === doctorInfor.priceId
@@ -228,8 +238,9 @@ class ManageDoctor extends Component {
                     return item && item.value === doctorInfor.specialtyId
                 })
                 selectClinic = dataClinic.find(item => {
-                    return item && item.value === doctorInfor.clinicId
+                    return item && item.value === clinicId
                 })
+                console.log(selectClinic)
             }
 
             this.setState({

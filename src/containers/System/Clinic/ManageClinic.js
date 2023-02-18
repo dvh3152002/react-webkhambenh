@@ -65,7 +65,14 @@ class ManageClinic extends Component {
             address: this.state.address
         })
         if (res && res.errCode === 0) {
-            toast.success("Create new clinic success")
+            toast.success("Create new clinic success");
+            this.setState({
+                name: '',
+                imagebase64: '',
+                contentHTML: '',
+                contentMarkdown: '',
+                address: ''
+            })
         } else {
             toast.error("Create new clinic error")
         }
@@ -79,11 +86,13 @@ class ManageClinic extends Component {
                     <div className='col-4 form-group'>
                         <label>Tên phòng khám</label>
                         <input type='text' className='form-control'
+                            value={this.state.name}
                             onChange={(event) => this.handleOnChangeText(event, 'name')} />
                     </div>
                     <div className='col-4 form-group'>
                         <label>Địa chỉ phòng khám</label>
                         <input type='text' className='form-control'
+                            value={this.state.address}
                             onChange={(event) => this.handleOnChangeText(event, 'address')} />
                     </div>
                     <div className='col-4 form-group'>
