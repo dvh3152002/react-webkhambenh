@@ -125,7 +125,8 @@ class BookingModal extends Component {
 
     confirmBooking = async () => {
         // !data.email || !data.doctorId || !data.timeType || !data.date
-        let date = new Date(this.state.birthday).getTime();
+        let birthday = new Date(this.state.birthday).getTime();
+        let date = new Date(this.props.dataScheduleTimeModal.date).getTime();
         let timeString = this.renderDataTime(this.props.dataScheduleTimeModal);
         let doctorName = this.renderDoctorName(this.props.dataScheduleTimeModal);
         let res = await postBookingAppointment({
@@ -135,6 +136,7 @@ class BookingModal extends Component {
             address: this.state.address,
             reason: this.state.reason,
             date: date,
+            birthday: birthday,
             selectedGender: this.state.selectedGender.value,
             doctorId: this.state.doctorId,
             doctorName: doctorName,
