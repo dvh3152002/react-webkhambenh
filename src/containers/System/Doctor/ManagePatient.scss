@@ -27,6 +27,23 @@
                 padding: 10px 0;
                 text-align: center;
             }
+
+            button{
+                border: none;
+                outline: none;
+                cursor: pointer;
+                height: 30px;
+                border-radius: 3px;
+            }
+
+            .mp-btn-confirm{
+                margin-right: 10px;
+                background-color: orange;
+            }
+
+            .mp-btn-remedy{
+                background-color: rgb(0, 157, 255);
+            }
         }
     }
 }
