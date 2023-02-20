@@ -1,0 +1,17 @@
+.remedy-modal-container{
+    .remedy-modal-header{
+        padding: 10px;
+            border-bottom: 1px solid #ccc;
+
+            .left{
+                font-size: 15px;
+                font-weight: 600;
+                color: #333;
+            }
+
+            .right{
+                cursor: pointer;
+                float: right;
+            }
+    }
+}
